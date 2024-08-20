@@ -118,7 +118,8 @@ class FilesystemPublisher extends Publisher
         $doPublish = ($forcePublish && $this->getFileExtension() === 'php') || $statusCode < 400;
 
         // Don't statically cache if the status code is in a deny list
-        if (in_array($statusCode, static::config()->get('disallowed_status_codes'))) {
+        $disallowedStatusCodes = static::config()->get('disallowed_status_codes');
+        if (!empty($disallowedStatusCodes) && in_array($statusCode, $disallowedStatusCodes)) {
             return [
                 'published' => false,
                 // Considering this a "success" since the behaviour is as expected

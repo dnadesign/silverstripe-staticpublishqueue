@@ -115,7 +115,7 @@ abstract class Publisher implements StaticPublisher
             $app = $this->getHTTPApplication();
             $response = $app->handle($request);
 
-            if ($this->config()->get('add_timestamp')) {
+            if ($this->config()->get('add_timestamp') && $response->getBody()) {
                 $response->setBody(
                     str_replace(
                         '</html>',
